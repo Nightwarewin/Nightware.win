@@ -1,1 +1,97 @@
-PCFET0NUWVBFIEhUTUwgLz4KPGh0bWwgbGFuZz0iZW4iPjxoZWFkPjx0aXRsZT5QYXk8L3RpdGxlPjxzdHlsZT4gYm9keSB7YmFja2dyb3VuZDpsaW5lYXItZ3JhZGllZW50KHRvIGJvdHRvbSwgYmxhY2ssIHB1cnBsZTsKICAgIGNvbG9yOiB3aGl0ZTsgZGlzcGxheTogZmxleDsKICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47CiAgICBhbGlnbi1pdGVtczogY2VudGVyOwogICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7CiAgICBoZWlnaHQ6IDEwMHZoOwogICAgbWFyZ2luOiA7Cglmb250LWZhbWlseTogQXJpYWwsIHNhbnMtc2VyaWY7Cn0KCiAgICAuY29udGFpbmVyIHsKICAgIHRleHQtYWxpZ246IGNlbnRlcjsKICAgIH0KCiAgICAuYnV0dG9uIHsKICAgIGJhY2tncm91bmQtY29sb3I6ICMzNDk4ZGI7CiAgICBjb2xvcjogd2hpdGU7CiAgICBwYWRkaW5nOiAxMHB4IDIwcHg7CiAgICBib3JkZXI6IG5vbmU7CiAgICBib3JkZXItcmFkaXVzOiA1cHg7CiAgICBjdXJzb3I6IHBvaW50ZXI7CiAgfQogCiAgICB1c3VyIHsKICAgIG1hcmdpbjogMTAweCB7MCA9IG91dDsKICAgIHBhZGRpbmc6IDEwcHggMTBweDsKICAgIGJvcmRlci1yYWRpdXMtOiA1cHg7CiAgICBib3JkZXI6IG5vbmU7CiAgICBmb250LXNpemU6IDE2cHg7CiAgfQp9Cjwvc3R5bGU+PC9oZWFkPjxib2R5PjxkaXYgY2xhc3M9ImNvbnRhaW5lciI+CiAgICA8aDI+Q29tcGxldGUgUHVyY2hhc2U8L2gyPgogICAgPHA+U2VsZWN0ZWQgT3B0aW9uOiA8c3BhbiBpZD0ic2VsZWN0ZWRPcHRpb24iPjwvc3Bhbj4+CiAgICA8aW5wdXQgdHlwZT0iZW1haWwiIGlkPSJlbWFpbCIgcGxhY2Vob2xkZXI9IkVtYWlsIiByZXF1aXJlZD4KICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0iZGlzY29yZFVzZXJuYW1lIiBwbGFjZWhvbGRlcj0iRGlzY29yZCBVc2VybmFtZSIgcmVxdWlyZWQ+CiAgICA8YnV0dG9uIGNsYXNzPSJidXR0b24iIGlkPSJwdXJjaGFzZUJ1dHRvb24iPlB1cmNoYXNlPC9idXR0b24+CiAgPC9kaXY+PC9ib2R5PjwvaHRtbD4=
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, black, purple);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Complete Purchase</h2>
+        <p>Selected Option: <span id="selectedOption"></span></p>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="text" id="discordUsername" placeholder="Discord Username" required>
+        <button class="button" id="purchaseButton">Purchase</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedOption = localStorage.getItem('selectedOption');
+            document.getElementById('selectedOption').textContent = selectedOption;
+            document.getElementById('purchaseButton').addEventListener('click', function() {
+                const email = document.getElementById('email').value;
+                const discordUsername = document.getElementById('discordUsername').value;
+                if (!email || !discordUsername) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                // Define PayPal links based on the selected option
+                let paypalLink;
+                if (selectedOption === "14 days") {
+                    paypalLink = 'https://www.paypal.com/paypalme/Nightwarewin?country.x=SE&locale.x=sv_SE';
+                } else if (selectedOption === "90 days") {
+                    paypalLink = 'https://www.paypal.com/paypalme/Nightwarewin?country.x=SE&locale.x=sv_SE';
+                } else if (selectedOption === "HWID reset") {
+                    paypalLink = 'https://www.paypal.com/paypalme/Nightwarewin?country.x=SE&locale.x=sv_SE';
+                } else {
+                    alert('Invalid option selected.');
+                    return;
+                }
+                // Send data to Discord webhook
+                fetch('https://discord.com/api/webhooks/1306244506332565604/HnwPufHSZ-fHW5-Il6uCK2tWtPW3mNGogegT6mxz9IJc7eyyCvcEf-3P1Zhe_nF_rR7u', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        content: `**Purchase Information**\n**Email:** ${email}\n**Discord:** ${discordUsername}\n**Selected Option:** ${selectedOption}`
+                    }),
+                }).then(response => {
+                    if (response.ok) {
+                        // Redirect to the corresponding PayPal link
+                        window.location.href = paypalLink;
+                    } else {
+                        alert('Error sending data to Discord');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                    alert('Error sending data to Discord');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
