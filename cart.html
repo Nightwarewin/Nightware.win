@@ -26,7 +26,18 @@
         }
         select {
             padding: 10px;
-@@ -40,6 +40,10 @@
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+        }
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
         .button:hover {
             background-color: #2980b9;
         }
@@ -37,7 +48,11 @@
     </style>
 </head>
 <body>
-@@ -51,26 +55,71 @@
+    <div class="container">
+        <h2>Choose an Option</h2>
+        <select id="options">
+            <option value="">Choose an option</option>
+            <option value="14 days">14 Days</option>
             <option value="90 days">90 Days</option>
             <option value="HWID reset">HWID Reset</option>
         </select>
