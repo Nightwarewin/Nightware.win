@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nixware</title>
+    <style>
+        body {
+            background-color: #2c3e50; /* Midnight color */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+        .image-container img {
+            width: 300px;
+            height: auto;
+        }
+        .image-container .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="your-image-url.jpg" alt="Nixware Image">
+            <div class="overlay-text">Nixware</div>
+        </div>
+        <button class="button" onclick="window.location.href='another-page.html'">Go to Another Page</button>
+    </div>
+</body>
+</html>
