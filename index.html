@@ -48,6 +48,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px;
         }
         .button:hover {
             background-color: #2980b9;
@@ -60,11 +61,23 @@
             <img src="https://i.postimg.cc/QtQybHf2/nixware6.png" alt="Nixware Image"> <!-- Custom image URL -->
             <div class="overlay-text">Nixware</div>
         </div>
-        <button class="button" id="Select Options">Select Options</button>
+        
+        <!-- Select Options button -->
+        <button class="button" id="select-options">Select Options</button>
+        
+        <!-- Policy button -->
+        <button class="button" id="policy-button">Policy</button>
     </div>
+
     <script>
-        document.getElementById('Select Options').addEventListener('click', function() {
-            window.location.href = 'cart.html'; // Redirect to cart.html
+        // Redirect to cart.html when Select Options button is clicked
+        document.getElementById('select-options').addEventListener('click', function() {
+            window.location.href = 'cart.html';
+        });
+
+        // Redirect to policy.html when Policy button is clicked
+        document.getElementById('policy-button').addEventListener('click', function() {
+            window.location.href = 'policy.html';
         });
     </script>
 </body>
