@@ -75,7 +75,6 @@
             GBP: 0.78,   // USD to GBP (United Kingdom)
             AUD: 1.56,   // USD to AUD (Australia)
             CAD: 1.36,   // USD to CAD (Canada)
-@@ -79,6 +79,7 @@
             BRL: 5.18,   // USD to BRL (Brazil)
             ZAR: 18.9,   // USD to ZAR (South Africa)
             MXN: 17.7,   // USD to MXN (Mexico)
@@ -83,7 +82,6 @@
             default: 1   // Default to USD for unsupported countries
         };
 
-@@ -98,7 +99,7 @@
                     regionPricing = convertPrices(basePricesUSD, conversionRates.SEK);
                 } else if (countryCode === 'EU') {
                     userCurrency = 'EUR';
@@ -92,7 +90,6 @@
                 } else if (countryCode === 'GB') {
                     userCurrency = 'GBP';
                     regionPricing = convertPrices(basePricesUSD, conversionRates.GBP);
-@@ -123,54 +124,57 @@
                 } else if (countryCode === 'MX') {
                     userCurrency = 'MXN';
                     regionPricing = convertPrices(basePricesUSD, conversionRates.MXN);
