@@ -1,1 +1,72 @@
-PCFET0NUWVBFIEhUTUwgLz4KPGh0bWwgbGFuZz0iZW4iPjxoZWFkPjx0aXRsZT5OSXh3YXJlPC90aXRsZT48c3R5bGU+Ym9keSB7YmFja2dyb3VuZDpsaW5lYXItZ3JhZGllZW50KHRvIGJvdHRvbSwgYmxhY2ssIHB1cnBsZSwgY29sb3I6IHdoaXRlO2Rpc3BsYXk6IGZsZXg7ZmxleC1kaXJlY3Rpb246IGNvbHVtbiwgc3R5bGU6Y2VudGVyO2FsaWduLWl0ZW1zOjp...
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nixware</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, black, purple); /* Black to purple gradient */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .image-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px; /* Adds space below the image */
+        }
+        .image-container img {
+            width: 300px;
+            height: auto;
+        }
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="https://i.postimg.cc/QtQybHf2/nixware6.png" alt="Nixware Image"> <!-- Custom image URL -->
+            <div class="overlay-text">Nixware</div>
+        </div>
+        <button class="button" id="Select Options">Start</button>
+        <button class="button" id="Select Options">Select Options</button>
+    </div>
+    <script>
+        document.getElementById('Select Options').addEventListener('click', function() {
+            window.location.href = 'cart.html'; // Redirect to cart.html
+        });
+    </script>
+</body>
+</html>
