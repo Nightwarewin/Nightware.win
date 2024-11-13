@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, black, purple);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Choose an Option</h2>
+        <select id="options">
+            <option value="">Choose an option</option>
+            <option value="14 days">14 Days</option>
+            <option value="90 days">90 Days</option>
+            <option value="HWID reset">HWID Reset</option>
+        </select>
+        <button class="button" id="addButton" style="display:none;">Add to Cart</button>
+    </div>
 
+    <script>
+        const options = document.getElementById('options');
+        const addButton = document.getElementById('addButton');
+
+        options.addEventListener('change', function() {
+            if (options.value) {
+                addButton.style.display = 'block';
+            } else {
+                addButton.style.display = 'none';
+            }
+        });
+
+        addButton.addEventListener('click', function() {
+            const selectedOption = options.value;
+            localStorage.setItem('selectedOption', selectedOption);
+            window.location.href = 'pay.html';
+        });
+    </script>
+</body>
+</html>
