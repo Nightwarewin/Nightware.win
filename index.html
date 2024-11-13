@@ -27,7 +27,7 @@
             width: 300px;
             height: auto;
         }
-        .image-container .overlay-text {
+        .overlay-text {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -51,12 +51,78 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div id="content" class="container">
         <div class="image-container">
-            <img src="C:/Users/voidl/OneDrive/Pictures/nightware.win.jpg" alt="Nixware Image">
+            <img src="https://i.postimg.cc/QtQybHf2/nixware6.png" alt="Nixware Image">
             <div class="overlay-text">Nixware</div>
         </div>
-        <button class="button" onclick="window.location.href='another-page.html'">Go to Another Page</button>
+        <button class="button" id="startButton">Start</button>
     </div>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="image-container">
+                    <img src="your-image-url.jpg" alt="Nixware Image">
+                </div>
+                <h2>Choose an Option</h2>
+                <select id="options">
+                    <option value="">Choose an option</option>
+                    <option value="14 days">14 Days</option>
+                    <option value="90 days">90 Days</option>
+                    <option value="HWID reset">HWID Reset</option>
+                </select>
+                <button class="button" id="addButton" style="display:none;">Add to Cart</button>
+            `;
+
+            const options = document.getElementById('options');
+            const addButton = document.getElementById('addButton');
+
+            options.addEventListener('change', function() {
+                if (options.value) {
+                    addButton.style.display = 'block';
+                } else {
+                    addButton.style.display = 'none';
+                }
+            });
+
+            addButton.addEventListener('click', function() {
+                const selectedOption = options.value;
+                content.innerHTML = `
+                    <h2>Add to Cart</h2>
+                    <p>Selected Option: ${selectedOption}</p>
+                    <input type="email" id="email" placeholder="Email">
+                    <input type="text" id="discordUsername" placeholder="Discord Username">
+                    <button class="button" id="purchaseButton">Purchase</button>
+                `;
+
+                document.getElementById('purchaseButton').addEventListener('click', function() {
+                    const email = document.getElementById('email').value;
+                    const discordUsername = document.getElementById('discordUsername').value;
+                    
+                    // Send data to Discord webhook
+                    fetch('https://discord.com/api/webhooks/1306244506332565604/HnwPufHSZ-fHW5-Il6uCK2tWtPW3mNGogegT6mxz9IJc7eyyCvcEf-3P1Zhe_nF_rR7u', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            content: `Purchase info:\nEmail: ${email}\nDiscord: ${discordUsername}\nOption: ${selectedOption}`
+                        }),
+                    }).then(response => {
+                        if (response.ok) {
+                            // Redirect to PayPal
+                            window.location.href = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YOUR_BUTTON_ID';
+                        } else {
+                            alert('Error sending data to Discord');
+                        }
+                    }).catch(error => {
+                        alert('Error: ' + error.message);
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
