@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, black, purple);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Complete Purchase</h2>
+        <p>Selected Option: <span id="selectedOption"></span></p>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="text" id="discordUsername" placeholder="Discord Username" required>
+        <button class="button" id="purchaseButton">Purchase</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedOption = localStorage.getItem('selectedOption');
+            document.getElementById('selectedOption').textContent = selectedOption;
+
+            document.getElementById('purchaseButton').addEventListener('click', function() {
+                const email = document.getElementById('email').value;
+                const discordUsername = document.getElementById('discordUsername').value;
+
+                if (!email || !discordUsername) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+
+                // Send data to Discord webhook
+                fetch('https://discord.com/api/webhooks/YOUR_WEBHOOK_URL', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        content: `Purchase info:\nEmail: ${email}\nDiscord: ${discordUsername}\nOption: ${selectedOption}`
+                    }),
+                }).then(response => {
+                    if (response.ok) {
+                        // Redirect to PayPal
+                        window.location.href = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YOUR_BUTTON_ID';
+                    } else {
+                        alert('Error sending data to Discord');
+                    }
+                }).catch(error => {
+                    alert('Error: ' + error.message);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
