@@ -60,97 +60,43 @@
     </div>
 
     <script>
-        // Pricing configuration for multiple regions
         const pricingConfig = {
             US: { "14 days": 3, "90 days": 8, "HWID reset": 5 },
             EU: { "14 days": 2.5, "90 days": 7, "HWID reset": 4.5 },
-            NL: { "14 days": 2.8, "90 days": 7.2, "HWID reset": 4.7 }, // Netherlands
+            NL: { "14 days": 2.8, "90 days": 7.2, "HWID reset": 4.7 },
             UK: { "14 days": 2.7, "90 days": 7.5, "HWID reset": 5 },
-            AU: { "14 days": 3.2, "90 days": 8.5, "HWID reset": 5.3 }, // Australia
+            AU: { "14 days": 3.2, "90 days": 8.5, "HWID reset": 5.3 },
             CA: { "14 days": 3, "90 days": 8, "HWID reset": 5 },
-            IN: { "14 days": 1.5, "90 days": 4.5, "HWID reset": 3 },  // India
-            CN: { "14 days": 2, "90 days": 6, "HWID reset": 4 },      // China
-            JP: { "14 days": 3.5, "90 days": 9, "HWID reset": 5.5 },  // Japan
-            default: { "14 days": 3, "90 days": 8, "HWID reset": 5 }  // Default price if region not found
-        // Base prices in USD
-        const basePricesUSD = {
-            "14 days": 3.3,
-            "90 days": 11,
-            "HWID reset": 1.65
+            IN: { "14 days": 1.5, "90 days": 4.5, "HWID reset": 3 },
+            CN: { "14 days": 2, "90 days": 6, "HWID reset": 4 },
+            JP: { "14 days": 3.5, "90 days": 9, "HWID reset": 5.5 },
+            default: { "14 days": 3, "90 days": 8, "HWID reset": 5 }
         };
-        // Conversion rates for different regions
+
         const conversionRates = {
-            SEK: 10.3,   // USD to SEK (Sweden)
-            EUR: 0.93,   // USD to EUR (Eurozone)
-            GBP: 0.78,   // USD to GBP (United Kingdom)
-            AUD: 1.56,   // USD to AUD (Australia)
-            CAD: 1.36,   // USD to CAD (Canada)
-            INR: 83.0,   // USD to INR (India)
-            JPY: 147.0,  // USD to JPY (Japan)
-            BRL: 5.18,   // USD to BRL (Brazil)
-            ZAR: 18.9,   // USD to ZAR (South Africa)
-            MXN: 17.7,   // USD to MXN (Mexico)
-            default: 1   // Default to USD for unsupported countries
+            SEK: 10.3, EUR: 0.93, GBP: 0.78, AUD: 1.56, CAD: 1.36,
+            INR: 83.0, JPY: 147.0, BRL: 5.18, ZAR: 18.9, MXN: 17.7, default: 1
         };
 
         let selectedOption = '';
         let userCurrency = 'USD';
-        let regionPricing = { ...basePricesUSD };
+        let regionPricing = pricingConfig.default;
 
-        // Function to detect user's country and adjust prices
-        // Function to detect user's country and apply local currency
         async function fetchRegionPricing() {
             try {
-                // Fetch the user's country information
                 const response = await fetch('https://ipapi.co/json/');
                 const data = await response.json();
                 const countryCode = data.country_code;
 
-                // Set prices based on detected region
-                const regionPricing = pricingConfig[countryCode] || pricingConfig.default;
-                updatePrice(regionPricing);
-                if (countryCode === 'SE') {
-                    userCurrency = 'SEK';
-                    regionPricing = convertPrices(basePricesUSD, conversionRates.SEK);
-                } else if (countryCode === 'EU') {
-                    userCurrency = 'EUR';
-                    regionPricing = convertPrices(basePricesUSD, conversionRates.EUR);
-                } else if (countryCode === 'GB') {
-                    userCurrency = 'GBP';
-                    regionPricing = convertPrices(basePricesUSD, conversionRates.GBP);
-                } else if (countryCode === 'AU') {
-                    userCurrency = 'AUD';
-                    regionPricing = convertPrices(basePricesUSD, conversionRates.AUD);
-                } else if (countryCode === 'CA') {
-                    userCurrency = 'CAD';
-                    regionPricing = convertPrices(basePricesUSD, conversionRates.CAD);
-                } else if (countryCode === 'IN') {
-                    userCurrency = 'INR';
-                    regionPricing = convertPrices(basePricesUSD, conversionRates.INR);
-                } else if (countryCode === 'JP') {
-                    userCurrency = 'JPY';
-                    regionPricing = convertPrices(basePricesUSD, conversionRates.JPY);
-                } else if (countryCode === 'BR') {
-                    userCurrency = 'BRL';
-                    regionPricing = convertPrices(basePricesUSD, conversionRates.BRL);
-                } else if (countryCode === 'ZA') {
-                    userCurrency = 'ZAR';
-                    regionPricing = convertPrices(basePricesUSD, conversionRates.ZAR);
-                } else if (countryCode === 'MX') {
-                    userCurrency = 'MXN';
-                    regionPricing = convertPrices(basePricesUSD, conversionRates.MXN);
-                } else {
-                    userCurrency = 'USD';
-                    regionPricing = basePricesUSD; // Fallback to USD if country isn't supported
-                }
+                regionPricing = pricingConfig[countryCode] || pricingConfig.default;
+                userCurrency = countryCode in conversionRates ? countryCode : 'USD';
                 updatePriceDisplay();
             } catch (error) {
                 console.error('Could not fetch region data:', error);
-                updatePrice(pricingConfig.default); // Fallback to default pricing
-                updatePriceDisplay(); // Fallback to USD prices if error
+                updatePriceDisplay(); // Fallback to default pricing
             }
         }
-        // Function to convert prices to the specified currency
+
         function convertPrices(prices, rate) {
             const convertedPrices = {};
             for (const [option, price] of Object.entries(prices)) {
@@ -159,18 +105,16 @@
             return convertedPrices;
         }
 
-        // Function to update price display based on selected option
-        function updatePrice(pricing) {
-        // Update price display based on selected option and currency
         function updatePriceDisplay() {
-            const priceElement = document.getElementById('price');
             const options = document.getElementById('options');
+            const priceElement = document.getElementById('price');
+            const rate = conversionRates[userCurrency] || conversionRates.default;
+            const localPrices = convertPrices(regionPricing, rate);
 
-            options.addEventListener('change', function () {
+            options.addEventListener('change', () => {
                 selectedOption = options.value;
                 if (selectedOption) {
-                    priceElement.textContent = `Price: ${pricing[selectedOption]} USD`;
-                    priceElement.textContent = `Price: ${regionPricing[selectedOption]} ${userCurrency}`;
+                    priceElement.textContent = `Price: ${localPrices[selectedOption]} ${userCurrency}`;
                     document.getElementById('addButton').style.display = 'block';
                 } else {
                     priceElement.textContent = "Price: Select an option";
@@ -179,10 +123,8 @@
             });
         }
 
-        // Load region-based pricing on page load
         document.addEventListener('DOMContentLoaded', fetchRegionPricing);
 
-        // Handle Add to Cart button
         const addButton = document.getElementById('addButton');
         addButton.addEventListener('click', function() {
             localStorage.setItem('selectedOption', selectedOption);
