@@ -70,7 +70,7 @@
         // Conversion rates for different regions
         const conversionRates = {
             SEK: 10.3,   // USD to SEK (Sweden)
-            EUR: 0.93,   // USD to EUR (Eurozone)
+            EUR: 0.93,   // USD to EUR (Netherlands)
             GBP: 0.78,   // USD to GBP (United Kingdom)
             AUD: 1.56,   // USD to AUD (Australia)
             CAD: 1.36,   // USD to CAD (Canada)
@@ -79,6 +79,7 @@
             BRL: 5.18,   // USD to BRL (Brazil)
             ZAR: 18.9,   // USD to ZAR (South Africa)
             MXN: 17.7,   // USD to MXN (Mexico)
+            RUB: 74.0,   // USD to RUB (Russia)
             default: 1   // Default to USD for unsupported countries
         };
 
@@ -98,7 +99,7 @@
                     regionPricing = convertPrices(basePricesUSD, conversionRates.SEK);
                 } else if (countryCode === 'EU') {
                     userCurrency = 'EUR';
-                    regionPricing = convertPrices(basePricesUSD, conversionRates.EUR);
+                    regionPricing = convertPrices(basePricesUSD, conversionRates.EUR); // Netherlands and other Euro countries
                 } else if (countryCode === 'GB') {
                     userCurrency = 'GBP';
                     regionPricing = convertPrices(basePricesUSD, conversionRates.GBP);
@@ -123,6 +124,9 @@
                 } else if (countryCode === 'MX') {
                     userCurrency = 'MXN';
                     regionPricing = convertPrices(basePricesUSD, conversionRates.MXN);
+                } else if (countryCode === 'RU') {
+                    userCurrency = 'RUB';
+                    regionPricing = convertPrices(basePricesUSD, conversionRates.RUB);
                 } else {
                     userCurrency = 'USD';
                     regionPricing = basePricesUSD; // Fallback to USD if country isn't supported
