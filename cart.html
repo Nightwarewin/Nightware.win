@@ -100,10 +100,37 @@
             CNY: '¥',  // Yuan for China
         };
 
-        // Placeholder function to simulate region detection (use geolocation or user input in production)
-        function getUserRegion() {
-            // For demo purposes, we'll manually set the region here (change to test different regions)
-            return 'JPY'; // Set this to 'SEK' for Sweden, 'RUB' for Russia, 'EUR' for Eurozone, etc.
+        // Function to fetch user region based on IP address (using ipinfo.io API)
+        async function getUserRegion() {
+            try {
+                const response = await fetch('https://ipinfo.io?token=YOUR_API_TOKEN'); // Use your ipinfo.io token here
+                const data = await response.json();
+                const country = data.country;
+
+                // Map the country to the appropriate currency
+                return getCurrencyByCountry(country);
+            } catch (error) {
+                console.error("Error fetching region:", error);
+                return 'USD'; // Default to USD if there's an error fetching region
+            }
+        }
+
+        // Map country to corresponding currency and conversion rate
+        function getCurrencyByCountry(countryCode) {
+            switch (countryCode) {
+                case 'SE': return 'SEK'; // Sweden
+                case 'JP': return 'JPY'; // Japan
+                case 'IN': return 'INR'; // India
+                case 'CN': return 'CNY'; // China
+                case 'RU': return 'RUB'; // Russia
+                case 'US': return 'USD'; // USA
+                case 'GB': return 'GBP'; // UK
+                case 'BR': return 'BRL'; // Brazil
+                case 'MX': return 'MXN'; // Mexico
+                case 'AU': return 'AUD'; // Australia
+                case 'CA': return 'CAD'; // Canada
+                default: return 'USD'; // Default to USD if country isn't found
+            }
         }
 
         // Function to convert prices to the specified currency
@@ -116,65 +143,12 @@
         }
 
         // Load region-based pricing on page load
-        function fetchRegionPricing() {
-            const region = getUserRegion(); // Get user's region
-            let regionPricing = basePricesUSD; // Default to USD
-            let userCurrency = 'USD'; // Default currency symbol
-            let currencySymbol = currencySymbols['USD']; // Default to USD symbol
+        async function fetchRegionPricing() {
+            const userCurrency = await getUserRegion(); // Get user's region based on IP
+            const currencySymbol = currencySymbols[userCurrency];
+            const conversionRate = conversionRates[userCurrency];
 
-            if (region === 'SEK') {
-                userCurrency = 'SEK';
-                currencySymbol = currencySymbols['SEK'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.SEK);
-            } else if (region === 'EUR') {
-                userCurrency = 'EUR';
-                currencySymbol = currencySymbols['EUR'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.EUR);
-            } else if (region === 'GBP') {
-                userCurrency = 'GBP';
-                currencySymbol = currencySymbols['GBP'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.GBP);
-            } else if (region === 'AUD') {
-                userCurrency = 'AUD';
-                currencySymbol = currencySymbols['AUD'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.AUD);
-            } else if (region === 'CAD') {
-                userCurrency = 'CAD';
-                currencySymbol = currencySymbols['CAD'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.CAD);
-            } else if (region === 'BRL') {
-                userCurrency = 'BRL';
-                currencySymbol = currencySymbols['BRL'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.BRL);
-            } else if (region === 'ZAR') {
-                userCurrency = 'ZAR';
-                currencySymbol = currencySymbols['ZAR'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.ZAR);
-            } else if (region === 'MXN') {
-                userCurrency = 'MXN';
-                currencySymbol = currencySymbols['MXN'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.MXN);
-            } else if (region === 'RUB') {
-                userCurrency = 'RUB';
-                currencySymbol = currencySymbols['RUB'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.RUB);
-            } else if (region === 'JPY') {
-                userCurrency = 'JPY';
-                currencySymbol = currencySymbols['JPY'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.JPY);
-            } else if (region === 'INR') {
-                userCurrency = 'INR';
-                currencySymbol = currencySymbols['INR'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.INR);
-            } else if (region === 'CNY') {
-                userCurrency = 'CNY';
-                currencySymbol = currencySymbols['CNY'];
-                regionPricing = convertPrices(basePricesUSD, conversionRates.CNY);
-            } else {
-                userCurrency = 'USD';
-                currencySymbol = currencySymbols['USD'];
-                regionPricing = basePricesUSD; // Fallback to USD if country isn't supported
-            }
+            let regionPricing = convertPrices(basePricesUSD, conversionRate); // Convert prices to the user's currency
 
             // Update price display
             updatePriceDisplay(regionPricing, userCurrency, currencySymbol);
