@@ -58,6 +58,7 @@
         <p class="price" id="price">Price: Calculating...</p>
         <button class="button" id="addButton" style="display:none;">Add to Cart</button>
     </div>
+
     <script>
         // Base prices in USD
         const basePricesUSD = {
@@ -100,10 +101,10 @@
             CNY: '¥',  // Yuan for China
         };
 
-        // Function to fetch user region based on IP address (using ipinfo.io API)
+        // Function to fetch user region based on IP address (using ip-api.com)
         async function getUserRegion() {
             try {
-                const response = await fetch('ipinfo.io/83.216.102.32?token=f3dfaaeb3b5c25'); // Use your ipinfo.io token here
+                const response = await fetch('http://ip-api.com/json'); // No API key required for basic use
                 const data = await response.json();
                 const country = data.country;
 
@@ -118,17 +119,17 @@
         // Map country to corresponding currency and conversion rate
         function getCurrencyByCountry(countryCode) {
             switch (countryCode) {
-                case 'SE': return 'SEK'; // Sweden
-                case 'JP': return 'JPY'; // Japan
-                case 'IN': return 'INR'; // India
-                case 'CN': return 'CNY'; // China
-                case 'RU': return 'RUB'; // Russia
-                case 'US': return 'USD'; // USA
-                case 'GB': return 'GBP'; // UK
-                case 'BR': return 'BRL'; // Brazil
-                case 'MX': return 'MXN'; // Mexico
-                case 'AU': return 'AUD'; // Australia
-                case 'CA': return 'CAD'; // Canada
+                case 'Sweden': return 'SEK'; // Sweden
+                case 'Japan': return 'JPY'; // Japan
+                case 'India': return 'INR'; // India
+                case 'China': return 'CNY'; // China
+                case 'Russia': return 'RUB'; // Russia
+                case 'United States': return 'USD'; // USA
+                case 'United Kingdom': return 'GBP'; // UK
+                case 'Brazil': return 'BRL'; // Brazil
+                case 'Mexico': return 'MXN'; // Mexico
+                case 'Australia': return 'AUD'; // Australia
+                case 'Canada': return 'CAD'; // Canada
                 default: return 'USD'; // Default to USD if country isn't found
             }
         }
