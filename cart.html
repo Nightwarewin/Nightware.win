@@ -106,6 +106,7 @@
             try {
                 const response = await fetch('http://ip-api.com/json'); // No API key required for basic use
                 const data = await response.json();
+                console.log('IP-API Response:', data); // Debug: Check the response
                 const country = data.country;
 
                 // Map the country to the appropriate currency
@@ -118,6 +119,7 @@
 
         // Map country to corresponding currency and conversion rate
         function getCurrencyByCountry(countryCode) {
+            console.log('Detected Country:', countryCode); // Debug: Check the country
             switch (countryCode) {
                 case 'Sweden': return 'SEK'; // Sweden
                 case 'Japan': return 'JPY'; // Japan
@@ -148,6 +150,9 @@
             const userCurrency = await getUserRegion(); // Get user's region based on IP
             const currencySymbol = currencySymbols[userCurrency];
             const conversionRate = conversionRates[userCurrency];
+
+            console.log('User Currency:', userCurrency); // Debug: Check the currency
+            console.log('Conversion Rate:', conversionRate); // Debug: Check the conversion rate
 
             let regionPricing = convertPrices(basePricesUSD, conversionRate); // Convert prices to the user's currency
 
