@@ -60,45 +60,24 @@
     </div>
 
     <script>
+        // Default pricing configuration (US)
         const pricingConfig = {
-            US: { "14 days": 3.3, "90 days": 11, "HWID reset": 1.6 },
-            EU: { "14 days": 2.5, "90 days": 7, "HWID reset": 4.5 },
-            NL: { "14 days": 2.8, "90 days": 7.2, "HWID reset": 4.7 },
-            US: { "14 days": 3.3, "90 days": 11, "HWID reset": 1.6 },
-            EU: { "14 days": 2.9, "90 days": 9.5, "HWID reset": 1.4 },
-            UK: { "14 days": 2.7, "90 days": 7.5, "HWID reset": 5 },
-            AU: { "14 days": 3.2, "90 days": 8.5, "HWID reset": 5.3 },
-            CA: { "14 days": 3, "90 days": 8, "HWID reset": 5 },
-            IN: { "14 days": 1.5, "90 days": 4.5, "HWID reset": 3 },
-            CN: { "14 days": 2, "90 days": 6, "HWID reset": 4 },
-            JP: { "14 days": 3.5, "90 days": 9, "HWID reset": 5.5 },
-            default: { "14 days": 3.3, "90 days": 11, "HWID reset": 1.6 }
+            "14 days": 3.3,
+            "90 days": 11,
+            "HWID reset": 1.6
         };
 
+        // Currency conversion rates (for USD)
         const conversionRates = {
             SEK: 10.3, EUR: 0.93, GBP: 0.78, AUD: 1.56, CAD: 1.36,
-            INR: 83.0, JPY: 147.0, BRL: 5.18, ZAR: 18.9, MXN: 17.7, default: 1
+            INR: 83.0, JPY: 147.0, BRL: 5.18, ZAR: 18.9, MXN: 17.7,
+            default: 1
         };
 
         let selectedOption = '';
         let userCurrency = 'USD';
-        let regionPricing = pricingConfig.default;
 
-        async function fetchRegionPricing() {
-            try {
-                const response = await fetch('https://ipapi.co/json/');
-                const data = await response.json();
-                const countryCode = data.country_code;
-
-                regionPricing = pricingConfig[countryCode] || pricingConfig.default;
-                userCurrency = countryCode in conversionRates ? countryCode : 'USD';
-                updatePriceDisplay();
-            } catch (error) {
-                console.error('Could not fetch region data:', error);
-                updatePriceDisplay(); // Fallback to default pricing
-            }
-        }
-
+        // Convert prices based on the selected currency
         function convertPrices(prices, rate) {
             const convertedPrices = {};
             for (const [option, price] of Object.entries(prices)) {
@@ -107,11 +86,12 @@
             return convertedPrices;
         }
 
+        // Update the displayed price based on the selected option and currency
         function updatePriceDisplay() {
             const options = document.getElementById('options');
             const priceElement = document.getElementById('price');
             const rate = conversionRates[userCurrency] || conversionRates.default;
-            const localPrices = convertPrices(regionPricing, rate);
+            const localPrices = convertPrices(pricingConfig, rate);
 
             options.addEventListener('change', () => {
                 selectedOption = options.value;
@@ -125,8 +105,10 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', fetchRegionPricing);
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', updatePriceDisplay);
 
+        // Handle "Add to Cart" button click
         const addButton = document.getElementById('addButton');
         addButton.addEventListener('click', function() {
             localStorage.setItem('selectedOption', selectedOption);
