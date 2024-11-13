@@ -30,6 +30,13 @@
         .button:hover {
             background-color: #2980b9;
         }
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -62,7 +69,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        content: `Purchase info:\nEmail: ${email}\nDiscord: ${discordUsername}\nOption: ${selectedOption}`
+                        content: `**Purchase Information**\n**Email:** ${email}\n**Discord:** ${discordUsername}\n**Selected Option:** ${selectedOption}`
                     }),
                 }).then(response => {
                     if (response.ok) {
@@ -72,3 +79,11 @@
                         alert('Error sending data to Discord');
                     }
                 }).catch(error => {
+                    console.error('Error:', error);
+                    alert('Error sending data to Discord');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
