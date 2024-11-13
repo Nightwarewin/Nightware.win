@@ -55,7 +55,7 @@
             <option value="90 days">90 Days</option>
             <option value="HWID reset">HWID Reset</option>
         </select>
-        <p class="price" id="price">Price: Calculating...</p>
+        <p class="price" id="price">Price: Choose an option</p>
         <button class="button" id="addButton" style="display:none;">Add to Cart</button>
     </div>
 
@@ -117,7 +117,7 @@
                     priceElement.textContent = `Price: ${localPrices[selectedOption]} ${userCurrency}`;
                     document.getElementById('addButton').style.display = 'block';
                 } else {
-                    priceElement.textContent = "Price: Select an option";
+                    priceElement.textContent = "Price: Choose an option";
                     document.getElementById('addButton').style.display = 'none';
                 }
             });
