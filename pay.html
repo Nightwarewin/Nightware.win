@@ -62,6 +62,19 @@
                     return;
                 }
 
+                // Define PayPal links based on the selected option
+                let paypalLink;
+                if (selectedOption === "14 days") {
+                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YOUR_BUTTON_ID_FOR_14_DAYS';
+                } else if (selectedOption === "90 days") {
+                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YOUR_BUTTON_ID_FOR_90_DAYS';
+                } else if (selectedOption === "HWID reset") {
+                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YOUR_BUTTON_ID_FOR_HWID_RESET';
+                } else {
+                    alert('Invalid option selected.');
+                    return;
+                }
+
                 // Send data to Discord webhook
                 fetch('https://discord.com/api/webhooks/1306244506332565604/HnwPufHSZ-fHW5-Il6uCK2tWtPW3mNGogegT6mxz9IJc7eyyCvcEf-3P1Zhe_nF_rR7u', {
                     method: 'POST',
@@ -73,8 +86,8 @@
                     }),
                 }).then(response => {
                     if (response.ok) {
-                        // Redirect to PayPal
-                        window.location.href = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YOUR_BUTTON_ID';
+                        // Redirect to the corresponding PayPal link
+                        window.location.href = paypalLink;
                     } else {
                         alert('Error sending data to Discord');
                     }
