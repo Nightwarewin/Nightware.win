@@ -93,9 +93,6 @@
         <!-- Buy Button (Invisible until selected) -->
         <button class="button" id="buy-button" style="display:none;">Buy Now</button>
 
-        <!-- YouTube Button (Invisible until selected) -->
-        <button class="button" id="youtube-button" style="display:none;">YouTube</button>
-
         <!-- Go to YouTube Channel Button (Invisible until YouTube is clicked) -->
         <button class="button" id="channel-button" style="display:none;">Go to YouTube Channel</button>
     </div>
@@ -120,7 +117,7 @@
             } else if (selectedOption === 'buy') {
                 document.getElementById('buy-button').style.display = 'inline-block';
             } else if (selectedOption === 'youtube') {
-                document.getElementById('youtube-button').style.display = 'inline-block'; // Show YouTube button
+                document.getElementById('channel-button').style.display = 'inline-block'; // Show YouTube button
             }
         });
 
@@ -138,12 +135,7 @@
         document.getElementById('buy-button').addEventListener('click', function() {
             window.location.href = 'cart.html';  // This redirects to the cart page
         });
-
-        // Show YouTube Channel button when YouTube button is clicked
-        document.getElementById('youtube-button').addEventListener('click', function() {
-            document.getElementById('channel-button').style.display = 'inline-block'; // Show Go to Channel button
-        });
-
+        
         // Redirect to YouTube Channel when Go to YouTube Channel button is clicked
         document.getElementById('channel-button').addEventListener('click', function() {
             window.open('https://www.youtube.com/channel/UC_x5XG1OV2P6uZZ5bG7v0gQ', '_blank');  // Replace with your actual YouTube channel link
