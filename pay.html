@@ -58,6 +58,7 @@
                     alert('Please fill in all fields');
                     return;
                 }
+
                 // Define PayPal links based on the selected option
                 let paypalLink;
                 if (selectedOption === "14 days") {
@@ -70,25 +71,35 @@
                     alert('Invalid option selected.');
                     return;
                 }
-                // Send data to Discord webhook
-                fetch('https://discord.com/api/webhooks/1306244506332565604/HnwPufHSZ-fHW5-Il6uCK2tWtPW3mNGogegT6mxz9IJc7eyyCvcEf-3P1Zhe_nF_rR7u', {
+
+                // Base64-encoded Discord webhook URL
+                const encodedWebhookUrl = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMwNjI0NDUwNjMzMjU2NTYwNC9IbnctU2ZzWi1mSFc1LUlsNnVDSzJ0V3RQdzNtTkdvZ2VnVDZteHk5SUpjN2V5eUN2Y0VmLTNQMVp..."; // Replace with your base64 encoded URL
+
+                // Decode the base64 URL dynamically
+                const webhookUrl = atob(encodedWebhookUrl);
+
+                // Send data to the backend server
+                fetch('https://your-server.com/submit-form', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        content: `**Purchase Information**\n**Email:** ${email}\n**Discord:** ${discordUsername}\n**Selected Option:** ${selectedOption}`
+                        email: email,
+                        discordUsername: discordUsername,
+                        selectedOption: selectedOption,
+                        webhookUrl: webhookUrl
                     }),
                 }).then(response => {
                     if (response.ok) {
                         // Redirect to the corresponding PayPal link
                         window.location.href = paypalLink;
                     } else {
-                        alert('Error sending data to Discord');
+                        alert('Error sending data to server');
                     }
                 }).catch(error => {
                     console.error('Error:', error);
-                    alert('Error sending data to Discord');
+                    alert('Error sending data to server');
                 });
             });
         });
