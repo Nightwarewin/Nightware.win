@@ -48,7 +48,9 @@
 </head>
 <body>
     <div class="container">
-        <h2>Choose an Option</h2>
+        <!-- Replace the text with an image -->
+        <img src="your-image-url.jpg" alt="Choose an Option" style="width: 200px; height: auto;" />
+
         <select id="options">
             <option value="">Choose an option</option>
             <option value="14 days">14 Days</option>
@@ -99,7 +101,7 @@
                     priceElement.textContent = `Price: ${localPrices[selectedOption]} ${userCurrency}`;
                     document.getElementById('addButton').style.display = 'block';
                 } else {
-                    priceElement.textContent = "Price: Choose an option";
+                    priceElement.textContent = "Price: loading...";
                     document.getElementById('addButton').style.display = 'none';
                 }
             });
