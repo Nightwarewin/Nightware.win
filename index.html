@@ -53,6 +53,19 @@
         .button:hover {
             background-color: #2980b9;
         }
+        select {
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        option {
+            background-color: #3498db;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -61,18 +74,41 @@
             <img src="https://i.postimg.cc/QtQybHf2/nixware6.png" alt="Nixware Image"> <!-- Custom image URL -->
             <div class="overlay-text">Nixware</div>
         </div>
+
+        <!-- Dropdown for Select Options -->
+        <select id="select-dropdown">
+            <option value="">Select Option</option>
+            <option value="discord">Discord</option>
+            <option value="policy">Policy</option>
+        </select>
         
-        <!-- Select Options button -->
-        <button class="button" id="select-options">Select Options</button>
-        
-        <!-- Policy button -->
-        <button class="button" id="policy-button">Policy</button>
+        <!-- Discord Invite Button -->
+        <button class="button" id="discord-button" style="display:none;">Join Discord</button>
+
+        <!-- Policy Button -->
+        <button class="button" id="policy-button" style="display:none;">View Policy</button>
     </div>
 
     <script>
-        // Redirect to cart.html when Select Options button is clicked
-        document.getElementById('select-options').addEventListener('click', function() {
-            window.location.href = 'cart.html';
+        // When an option is selected from the dropdown
+        document.getElementById('select-dropdown').addEventListener('change', function() {
+            const selectedOption = this.value;
+
+            // Hide both buttons initially
+            document.getElementById('discord-button').style.display = 'none';
+            document.getElementById('policy-button').style.display = 'none';
+
+            // Show the relevant button based on the selection
+            if (selectedOption === 'discord') {
+                document.getElementById('discord-button').style.display = 'inline-block';
+            } else if (selectedOption === 'policy') {
+                document.getElementById('policy-button').style.display = 'inline-block';
+            }
+        });
+
+        // Redirect to Discord invite when Discord button is clicked
+        document.getElementById('discord-button').addEventListener('click', function() {
+            window.location.href = 'https://discord.gg/vFBMHYe5Fj';  // Replace with your actual Discord invite link
         });
 
         // Redirect to policy.html when Policy button is clicked
